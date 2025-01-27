@@ -8,9 +8,10 @@ function setup() {
   createCanvas(450, 400);
   background(20,100,200);
   userInput = createInput();
+  textSize(15);
   text(str('will generate a yellow duck shaped poem based on the prompt'),40,30);
   userInput.position(40,50);
-  button = createButton('add to poem');
+  button = createButton('generate duck poem');
   button.position(userInput.x, userInput.y + 21);
   button.mousePressed(newLine);
 }
@@ -65,8 +66,8 @@ function newLine(){
   userLine = userInput.value();
   userInput.value('');
   let words = RiTa.tokenize(userLine); // tokenize into an array
-  space1 = [8,6,0,6,7,9,6,4,4,5,9,9,9];
-  char1 =  [10,13,17,14,11,23,28,28,26,25,24,20];
+  space1 = [8,6,0,6,7,9,6,4,4,5,9,10,12];
+  char1 =  [10,13,17,14,11,23,28,28,26,24,22,18];
   space2 = [0,0,0,0,6,0,0,0,0,0,0,0,0];
   char2 =  [0,0,0,0,5,0,0,0,0,0,0,0,0];
   n = '';
@@ -94,13 +95,13 @@ function newLine(){
       // https://rednoise.org/rita/reference/RiTa/isVerb/index.html
       p[5] = words[w];
     } else {
-      p[random[9]] = words[w];
+      p[random[0,1,5,6,7,8,9,10,11]] = words[w];
       // poem.push(words[w]);
     }
     response += RiTa.randomWord({ pos: "vb"},{ numSyllables: 5, maxLength: char1[w]});
   }
 
-  for (l=0;l<11;l++){
+  for (l=0;l<space1.length;l++){
     response = '';
     for (s = 0; s < space1[l]; s++){
       response += ' ';
@@ -136,6 +137,9 @@ function newLine(){
 
 function writePoem(){
   background(20,100,200);
+  fill(0,0,0);
+  textSize(15);
+  text(str('will generate a duck shaped poem based on the prompt'),40,30);
   duck.show();
   for (x = 0; x < poem.length; x++){
     fill(255,255,0);
